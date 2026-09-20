@@ -11,19 +11,43 @@ venue credential and wallet removed. What remains is the part that says no.
 
 ```python
 from decimal import Decimal
+from rails.store import init_db
 from rails.config import RiskConfig
 from rails.risk_manager import RiskManager, TradeProposal
 
+init_db("ledger.db")
 rails = RiskManager(config=RiskConfig(), db_path="ledger.db")
-result = rails.run_risk_checks(proposal)
 
-if not result.passed:
-    for check in result.checks:
-        if not check.passed:
-            print(f"{check.check_name}: {check.message}")
-    # min_edge: Edge 0.0210 < 0.0400
-    # total_exposure: Exposure $172.00 > $150 (30%)
+proposal = TradeProposal(
+    market_id="mkt-1", direction="YES", entry_price=Decimal("0.50"),
+    p_model=0.52, confidence="HIGH", category="weather",
+    event_id="evt-1", token_id="tok-1",
+)
+
+result = rails.run_risk_checks(proposal)
+print(result.overall_passed, result.trade_mode)   # False paper
+
+for check in result.checks:
+    print(f"{'PASS  ' if check.passed else 'REFUSE'} {check.check_name}: {check.message}")
 ```
+
+Real output from the defaults above — a 2% edge against a 4% minimum:
+
+```text
+False paper
+REFUSE min_edge             Edge 0.0200 < 0.0400 minimum
+PASS   position_size_limit  Position $13.32 <= $50 (5%)
+PASS   total_exposure       Exposure $13.32 <= $300 (30%)
+PASS   concentration        Category 0/3, Event 0/2
+PASS   daily_loss           Daily loss $0 <= $30 (3%)
+PASS   drawdown             Drawdown 0.0% in NORMAL tier (< 8.0%)
+PASS   value_at_risk        Total risk $13.32 <= $300 (30% VaR limit)
+PASS   kill_switch          No STOP file -- kill switch disengaged
+PASS   paper_mode           Trade mode: paper
+PASS   api_cost_budget      API costs $0 <= $5/day
+```
+
+Every gate ran and reported, including the nine that passed after one refused.
 
 ## The ten gates
 
@@ -60,7 +84,7 @@ limits, and every bypass flag defaults to off. Live execution is an explicit
 decision, never an inherited one.
 
 **Nothing here knows what a venue is.** `risk_manager.py` imports no exchange
-SDK. It reads a local ledger — four tables — and answers questions about what is
+SDK. It reads a local ledger — five tables — and answers questions about what is
 already at risk. Point it at your own store and it works unchanged.
 
 **Paper fills do not consume live risk budget.** Every live-risk query filters on
@@ -74,10 +98,9 @@ pip install -r requirements.txt
 pytest -q                 # 32 passed, 1 xfailed — no network, no credentials
 ```
 
-```python
-from rails.store import init_db
-init_db("ledger.db")      # creates the five tables in rails/schema.sql
-```
+`init_db(path)` creates the five tables in `rails/schema.sql`: trades, markets,
+performance, api_costs and portfolio_snapshots. Point it at your own store
+instead if you already have one; the gates only read.
 
 ## Supervising the agent above the rails
 
