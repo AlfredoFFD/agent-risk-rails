@@ -4,15 +4,7 @@
 
 Not a prompt. A gate the agent cannot see, argue with, or widen.
 
-```
-agent proposes  ──▶  ┌─────────────────────────┐
-                     │  10 independent checks  │──▶  REFUSED
-                     │  every one of them runs │      + the number it
-                     └─────────────────────────┘        refused on
-                              │
-                       limits live here,
-                     outside the agent's reach
-```
+![Ten gates running against one proposal: min_edge refuses at 2% against a 4% minimum, and the other nine still report](docs/gates.svg)
 
 Ten gates run against the real state of the world, not the agent's description of
 it. Each returns a pass or a refusal with the figure it refused on. Every gate runs

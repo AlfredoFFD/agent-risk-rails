@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 392" width="760" height="392" role="img" aria-label="Terminal output: an agent proposes a trade, the min_edge gate refuses it at 2 percent against a 4 percent minimum, and the nine remaining gates still run and report.">
+  <rect x="0" y="0" width="760" height="392" rx="10" fill="#14161B"/>
+  <rect x="0" y="0" width="760" height="34" rx="10" fill="#1E2129"/>
+  <rect x="0" y="24" width="760" height="10" fill="#1E2129"/>
+  <circle cx="20" cy="17" r="5.5" fill="#FF5F57"/>
+  <circle cx="39" cy="17" r="5.5" fill="#FEBC2E"/>
+  <circle cx="58" cy="17" r="5.5" fill="#28C840"/>
+  <text x="380" y="21" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" fill="#8B94A6">agent-risk-rails</text>
+
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13">
+    <text x="22" y="62" fill="#5FB3D4">$</text>
+    <text x="40" y="62" fill="#D6DBE5">python check_proposal.py</text>
+
+    <text x="22" y="90" fill="#6E7687">agent proposes:</text>
+    <text x="150" y="90" fill="#D6DBE5">YES @ 0.50  ·  p_model 0.52  ·  edge 2.0%</text>
+
+    <text x="22" y="120" fill="#FF6B5B" font-weight="600">REFUSED</text>
+    <text x="100" y="120" fill="#D6DBE5">overall_passed = False</text>
+    <text x="330" y="120" fill="#6E7687">trade_mode = paper</text>
+
+    <line x1="22" y1="134" x2="738" y2="134" stroke="#2A2E38" stroke-width="1"/>
+
+    <text x="22" y="160" fill="#FF6B5B" font-weight="600">REFUSE</text>
+    <text x="104" y="160" fill="#E6C07B">min_edge</text>
+    <text x="270" y="160" fill="#D6DBE5">Edge 0.0200 &lt; 0.0400 minimum</text>
+
+    <text x="22" y="184" fill="#5FC77F">PASS</text>
+    <text x="104" y="184" fill="#8B94A6">position_size_limit</text>
+    <text x="270" y="184" fill="#8B94A6">Position $13.32 &lt;= $50 (5%)</text>
+
+    <text x="22" y="205" fill="#5FC77F">PASS</text>
+    <text x="104" y="205" fill="#8B94A6">total_exposure</text>
+    <text x="270" y="205" fill="#8B94A6">Exposure $13.32 &lt;= $300 (30%)</text>
+
+    <text x="22" y="226" fill="#5FC77F">PASS</text>
+    <text x="104" y="226" fill="#8B94A6">concentration</text>
+    <text x="270" y="226" fill="#8B94A6">Category 0/3, Event 0/2</text>
+
+    <text x="22" y="247" fill="#5FC77F">PASS</text>
+    <text x="104" y="247" fill="#8B94A6">daily_loss</text>
+    <text x="270" y="247" fill="#8B94A6">Daily loss $0 &lt;= $30 (3%)</text>
+
+    <text x="22" y="268" fill="#5FC77F">PASS</text>
+    <text x="104" y="268" fill="#8B94A6">drawdown</text>
+    <text x="270" y="268" fill="#8B94A6">Drawdown 0.0% in NORMAL tier (&lt; 8.0%)</text>
+
+    <text x="22" y="289" fill="#5FC77F">PASS</text>
+    <text x="104" y="289" fill="#8B94A6">value_at_risk</text>
+    <text x="270" y="289" fill="#8B94A6">Total risk $13.32 &lt;= $300 (30% VaR limit)</text>
+
+    <text x="22" y="310" fill="#5FC77F">PASS</text>
+    <text x="104" y="310" fill="#8B94A6">kill_switch</text>
+    <text x="270" y="310" fill="#8B94A6">No STOP file -- kill switch disengaged</text>
+
+    <text x="22" y="331" fill="#5FC77F">PASS</text>
+    <text x="104" y="331" fill="#8B94A6">paper_mode</text>
+    <text x="270" y="331" fill="#8B94A6">Trade mode: paper</text>
+
+    <text x="22" y="352" fill="#5FC77F">PASS</text>
+    <text x="104" y="352" fill="#8B94A6">api_cost_budget</text>
+    <text x="270" y="352" fill="#8B94A6">API costs $0 &lt;= $5/day</text>
+  </g>
+
+  <text x="22" y="378" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5" fill="#6E7687">one gate refused — the other nine still ran, so you see every reason at once</text>
+</svg>
