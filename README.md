@@ -1,13 +1,29 @@
 # agent-risk-rails
 
-A pre-execution gate for autonomous agents that can move real money.
+**You gave an LLM a tool that spends money. What stops it?**
 
-An agent proposes an action. Ten independent checks run against the current state
-of the world, every one of them, and each returns a pass or a refusal with the
-number it refused on. The agent never sees the limits and cannot change them.
+Not a prompt. A gate the agent cannot see, argue with, or widen.
 
-Extracted from a live prediction-market trading system, with every strategy,
-venue credential and wallet removed. What remains is the part that says no.
+```
+agent proposes  ──▶  ┌─────────────────────────┐
+                     │  10 independent checks  │──▶  REFUSED
+                     │  every one of them runs │      + the number it
+                     └─────────────────────────┘        refused on
+                              │
+                       limits live here,
+                     outside the agent's reach
+```
+
+Ten gates run against the real state of the world, not the agent's description of
+it. Each returns a pass or a refusal with the figure it refused on. Every gate runs
+even after one fails, so you see all the reasons at once instead of discovering
+them one restart at a time.
+
+This is not a thought experiment. It ran against a live prediction-market account,
+and it is published with every strategy, venue credential and wallet removed. What
+remains is the part that says no — plus [the operating protocol](docs/AGENT_SUPERVISION.md)
+for the harder problem underneath: an agent's summary of the world is not evidence
+about the world.
 
 ```python
 from decimal import Decimal
